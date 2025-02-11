@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.avrist.core</groupId>
+        <artifactId>avrist-core</artifactId>
+        <version>1.2.0</version>
+    </parent>
+
+    <groupId>com.avrist.webui</groupId>
+    <artifactId>webui</artifactId>
+    <version>1.0</version>
+    <packaging>pom</packaging>
+    <name>webui</name>
+    <description>webui</description>
+
+    <modules>
+        <module>webui-global</module>
+        <module>webui-service</module>
+        <module>webui-endpoint</module>
+        <module>webui-datasource</module>
+    </modules>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <core.version>1.2.0</core.version>
+    </properties>
+
+</project>
