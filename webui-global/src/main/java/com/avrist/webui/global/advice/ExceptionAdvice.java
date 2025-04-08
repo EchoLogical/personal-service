@@ -2,11 +2,10 @@ package com.avrist.webui.global.advice;
 
 import com.avrist.core.constant.AVRStatus;
 import com.avrist.webui.global.exception.BusinessServiceValidationException;
-import com.avrist.webui.global.helper.ErrorHelper;
 import com.avrist.webui.global.model.BaseResponse;
+import com.avrist.webui.global.util.WebUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,6 +20,8 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -35,9 +36,6 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
 
     @Value("${spring.application.name}")
     private String appName;
-
-    @Autowired
-    private ErrorHelper errorHelper;
 
     @Override
     protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -110,11 +108,6 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
         log.error(LOG_ERROR_MSG, requestId, ex.getMessage());
         log.error(LOG_STACKTRACE_MSG, requestId, ex.getStackTrace());
 
-        errorHelper.sendErrorNotif(
-                String.format("App Fatal Error %s", appName),
-                ex.getMessage(),
-                ex);
-
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(BaseResponse.builder()
                 .responseCode(AVRStatus.ERROR.getCode())
                 .responseMessage(AVRStatus.ERROR.getStatus())
@@ -129,11 +122,6 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
         log.error(LOG_ERROR_MSG, requestId, ex.getMessage());
         log.error(LOG_STACKTRACE_MSG, requestId, ex.getStackTrace());
 
-        errorHelper.sendErrorNotif(
-                String.format("App Fatal Error %s", appName),
-                ex.getMessage(),
-                ex);
-
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(BaseResponse.builder()
                 .responseCode(AVRStatus.ERROR.getCode())
                 .responseMessage(AVRStatus.ERROR.getStatus())
@@ -143,11 +131,19 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(BusinessServiceValidationException.class)
-    public final ResponseEntity<BaseResponse<Object>> handleBusinessValidationException(BusinessServiceValidationException ex, WebRequest request) {
+    public final ResponseEntity<BaseResponse<Object>> handleBusinessValidationException(BusinessServiceValidationException ex, WebRequest request, HttpServletResponse response) throws IOException {
         String requestId = UUID.randomUUID().toString();
+        String userAgent = request.getHeader("User-Agent");
 
         log.error(LOG_ERROR_MSG, requestId, ex.getMessage());
         log.error(LOG_STACKTRACE_MSG, requestId, ex.getStackTrace());
+        log.error("User-agent: {}", userAgent);
+
+        if (WebUtil.isBrowser(userAgent) &&
+                AVRStatus.UNAUTHORIZED_REDIRECT.getCode().equalsIgnoreCase(ex.getResponseCode())) {
+            response.sendRedirect("/login");
+            return null;
+        }
 
         return ResponseEntity.status(ex.getHttpStatus()).body(BaseResponse.builder()
                 .responseCode(ex.getResponseCode())

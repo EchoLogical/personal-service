@@ -1,9 +1,11 @@
 package com.avrist.webui.bizservice.webuilogincheck.controller;
 
+import com.avrist.core.constant.AVRStatus;
 import com.avrist.webui.global.exception.BusinessServiceValidationException;
 import com.avrist.webui.bizservice.webuilogincheck.WebUiLoginCheckService;
-import com.avrist.webui.bizservice.webuilogincheck.model.request.WebUIloginRequest;
-import com.avrist.webui.bizservice.webuilogincheck.model.response.WebUIloginResponse;
+import com.avrist.webui.bizservice.webuilogincheck.model.request.WebUIloginCheckRequest;
+import com.avrist.webui.bizservice.webuilogincheck.model.response.WebUIloginCheckResponse;
+import com.avrist.webui.global.model.BaseResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,11 +27,14 @@ public class WebUiLoginCheckController {
     }
 
     @PostMapping("")
-    public ResponseEntity<WebUIloginResponse> validateCredentials(
-            @RequestBody @Valid WebUIloginRequest request) throws BusinessServiceValidationException {
+    public ResponseEntity<BaseResponse<WebUIloginCheckResponse>> validateCredentials(
+            @RequestBody @Valid WebUIloginCheckRequest request) throws BusinessServiceValidationException {
         return ResponseEntity
                 .ok()
-                .body(webUILoginCheckService.execute(request));
+                .body(BaseResponse.<WebUIloginCheckResponse>builder()
+                        .responseCode(AVRStatus.OK.getCode())
+                        .content(webUILoginCheckService.execute(request))
+                        .build());
     }
 
 }

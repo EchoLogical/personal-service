@@ -19,8 +19,9 @@
     <modules>
         <module>webui-global</module>
         <module>webui-service</module>
-        <module>webui-endpoint</module>
+        <module>webui-webapp</module>
         <module>webui-datasource</module>
+        <module>webui-endpoint</module>
     </modules>
 
     <properties>

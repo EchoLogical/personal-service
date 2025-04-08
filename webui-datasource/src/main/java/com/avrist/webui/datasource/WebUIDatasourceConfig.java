@@ -37,7 +37,7 @@ public class WebUIDatasourceConfig {
     public LocalContainerEntityManagerFactoryBean webuiEntityManager(){
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(webuiDatasource());
-        em.setPackagesToScan(("com.avrist.core.datasource.webui.entity"));
+        em.setPackagesToScan(("com.avrist.webui.datasource.entity"));
 
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);

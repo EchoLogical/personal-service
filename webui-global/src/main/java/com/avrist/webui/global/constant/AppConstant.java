@@ -17,4 +17,10 @@ public class AppConstant {
 
     public static final String REFRESH_TOKEN_EXPIRY = "REFRESH_TOKEN_EXPIRY";
     public static final String REFRESH_TOKEN_EXPIRY_DESC = "Refresh token expiry in day.";
+
+    public static final String SESSION_EXPIRY = "SESSION_EXPIRY";
+    public static final String SESSION_EXPIRY_DESC = "Web session expiry in hours.";
+
+    public static final String REMEMBER_SESSION_EXPIRY = "REMEMBER_SESSION_EXPIRY";
+    public static final String REMEMBER_SESSION_EXPIRY_DESC = "Web session expiry in hours for remember me.";
 }

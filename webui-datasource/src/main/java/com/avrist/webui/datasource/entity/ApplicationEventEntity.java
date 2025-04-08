@@ -35,7 +35,7 @@ public class ApplicationEventEntity implements Serializable {
     private String severity;
     @Column(name = "Timestamp", nullable = false)
     private LocalDateTime timestamp;
-    @Column(name = "ErrorCode", nullable = false)
+    @Column(name = "StackTrace", nullable = false)
     private String stackTrace;
     @Column(name = "RequestId", nullable = false)
     private String requestId;

@@ -7,5 +7,6 @@
     <file url="file://$PROJECT_DIR$/webui-endpoint/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/webui-global/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/webui-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/webui-webapp/src/main/java" charset="UTF-8" />
   </component>
 </project>

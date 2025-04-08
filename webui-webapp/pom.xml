@@ -9,12 +9,21 @@
         <version>1.0</version>
     </parent>
 
-    <artifactId>webui-endpoint</artifactId>
+    <groupId>com.avrist.webui.app</groupId>
+    <artifactId>webui-webapp</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.avrist.webui.service</groupId>
+            <artifactId>webui-service</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>
