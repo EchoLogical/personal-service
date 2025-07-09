@@ -4,9 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.avrist.core</groupId>
-        <artifactId>avrist-core</artifactId>
-        <version>1.2.0</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.11</version>
+        <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <groupId>com.avrist.webui</groupId>
@@ -17,18 +18,34 @@
     <description>webui</description>
 
     <modules>
-        <module>webui-global</module>
-        <module>webui-service</module>
-        <module>webui-webapp</module>
-        <module>webui-datasource</module>
-        <module>webui-endpoint</module>
+        <module>global</module>
+        <module>datasource</module>
+        <module>endpoint</module>
+        <module>app</module>
     </modules>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <core.version>1.2.0</core.version>
+        <org.projectlombok.version>1.18.20</org.projectlombok.version>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${org.projectlombok.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
 </project>
