@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$APPLICATION_HOME_DIR$/bin/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/datasource/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/datasource/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/datasource/webapp-datasource/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/datasource/webapp-datasource/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/endpoint/eureka/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/endpoint/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/endpoint/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/endpoint/webui-audit/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/endpoint/webui-auth/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/endpoint/webui-eureka/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/endpoint/webui-gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/endpoint/webui-logger/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/global/src/main/java" charset="UTF-8" />

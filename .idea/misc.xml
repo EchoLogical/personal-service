@@ -18,6 +18,11 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/datasource/pom.xml" />
+        <option value="$PROJECT_DIR$/endpoint/webui-audit/pom.xml" />
+        <option value="$PROJECT_DIR$/endpoint/webui-auth/pom.xml" />
+        <option value="$PROJECT_DIR$/endpoint/webui-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/endpoint/webui-logger/pom.xml" />
         <option value="$PROJECT_DIR$/webui-webservice/pom.xml" />
       </set>
     </option>

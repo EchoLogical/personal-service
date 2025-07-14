@@ -1,7 +1,7 @@
 package com.avrist.webui.app.service.webfilter.helper;
 
 import com.avrist.webui.app.service.webfilter.config.UnfilteredPathConfig;
-import com.avrist.webui.datasource.webapp.repository.WebSessionRepository;
+import com.avrist.webui.app.datasource.repository.WebSessionRepository;
 import com.avrist.webui.global.constant.WebSessionConstant;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
