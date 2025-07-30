@@ -4,11 +4,13 @@ import com.avrist.webui.global.constant.AVRStatus;
 import com.avrist.webui.global.exception.BusinessServiceValidationException;
 import com.avrist.webui.global.model.BaseResponse;
 import com.avrist.webui.global.util.WebUtil;
+import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
@@ -20,7 +22,6 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -38,7 +39,7 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
     private String appName;
 
     @Override
-    protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected ResponseEntity<Object> handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         String requestId = UUID.randomUUID().toString();
         log.error(LOG_ERROR_MSG, requestId, ex.getMessage());
         log.error(LOG_STACKTRACE_MSG, requestId, ex.getStackTrace());
@@ -53,7 +54,7 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
     }
 
     @Override
-    protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers, HttpStatusCode  status, WebRequest request) {
         String requestId = UUID.randomUUID().toString();
         log.error(LOG_ERROR_MSG, requestId, ex.getMessage());
         log.error(LOG_STACKTRACE_MSG, requestId, ex.getStackTrace());
@@ -68,7 +69,7 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
     }
 
     @Override
-    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode  status, WebRequest request) {
         String requestId = UUID.randomUUID().toString();
         log.error(LOG_ERROR_MSG, requestId, ex.getMessage());
         log.error(LOG_STACKTRACE_MSG, requestId, ex.getStackTrace());
@@ -83,7 +84,7 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
     }
 
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode  status, WebRequest request) {
         String requestId = UUID.randomUUID().toString();
 
         List<Map<String, String>> errorList = new ArrayList<>();
