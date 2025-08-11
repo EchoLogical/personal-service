@@ -10,17 +10,17 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.avrist.webui</groupId>
-    <artifactId>webui</artifactId>
+    <groupId>com.avrist.sc</groupId>
+    <artifactId>sc</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
-    <name>webui</name>
-    <description>webui</description>
+    <name>Service Collection</name>
+    <description>Service Collection</description>
 
     <modules>
         <module>global</module>
         <module>endpoint</module>
-        <module>app</module>
+        <module>service</module>
     </modules>
 
     <properties>
