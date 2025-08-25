@@ -1,6 +1,6 @@
 package com.github.echological.sc.global.advice;
 
-import com.github.echological.sc.global.constant.AVRStatus;
+import com.github.echological.sc.global.constant.ServiceStatus;
 import com.github.echological.sc.global.exception.BusinessServiceValidationException;
 import com.github.echological.sc.global.model.BaseResponse;
 import com.github.echological.sc.global.util.WebUtil;
@@ -45,8 +45,8 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
         log.error(LOG_STACKTRACE_MSG, requestId, ex.getStackTrace());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(BaseResponse.builder()
-                .responseCode(AVRStatus.UNSUPPORTED_MEDIA_TYPE.getCode())
-                .responseMessage(AVRStatus.UNSUPPORTED_MEDIA_TYPE.getStatus())
+                .responseCode(ServiceStatus.UNSUPPORTED_MEDIA_TYPE.getCode())
+                .responseMessage(ServiceStatus.UNSUPPORTED_MEDIA_TYPE.getStatus())
                 .requestId(requestId)
                 .error(Stream.of("Unsupported media type.").collect(Collectors.toList()))
                 .requestTimestamp(new Date().getTime())
@@ -60,8 +60,8 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
         log.error(LOG_STACKTRACE_MSG, requestId, ex.getStackTrace());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(BaseResponse.builder()
-                .responseCode(AVRStatus.NO_HANDLER_FOUND.getCode())
-                .responseMessage(AVRStatus.NO_HANDLER_FOUND.getStatus())
+                .responseCode(ServiceStatus.NO_HANDLER_FOUND.getCode())
+                .responseMessage(ServiceStatus.NO_HANDLER_FOUND.getStatus())
                 .requestId(requestId)
                 .error(Stream.of("No handler found for this path.").collect(Collectors.toList()))
                 .requestTimestamp(new Date().getTime())
@@ -75,8 +75,8 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
         log.error(LOG_STACKTRACE_MSG, requestId, ex.getStackTrace());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(BaseResponse.builder()
-                .responseCode(AVRStatus.MESSAGE_NOT_READABLE.getCode())
-                .responseMessage(AVRStatus.MESSAGE_NOT_READABLE.getStatus())
+                .responseCode(ServiceStatus.MESSAGE_NOT_READABLE.getCode())
+                .responseMessage(ServiceStatus.MESSAGE_NOT_READABLE.getStatus())
                 .requestId(requestId)
                 .error(Stream.of("Message not readable").collect(Collectors.toList()))
                 .requestTimestamp(new Date().getTime())
@@ -95,8 +95,8 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(BaseResponse.builder()
-                .responseCode(AVRStatus.INVALID_ARGUMENT.getCode())
-                .responseMessage(AVRStatus.INVALID_ARGUMENT.getStatus())
+                .responseCode(ServiceStatus.INVALID_ARGUMENT.getCode())
+                .responseMessage(ServiceStatus.INVALID_ARGUMENT.getStatus())
                 .requestId(requestId)
                 .requestTimestamp(new Date().getTime())
                 .error(errorList)
@@ -110,8 +110,8 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
         log.error(LOG_STACKTRACE_MSG, requestId, ex.getStackTrace());
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(BaseResponse.builder()
-                .responseCode(AVRStatus.ERROR.getCode())
-                .responseMessage(AVRStatus.ERROR.getStatus())
+                .responseCode(ServiceStatus.ERROR.getCode())
+                .responseMessage(ServiceStatus.ERROR.getStatus())
                 .requestId(requestId)
                 .requestTimestamp(new Date().getTime())
                 .build());
@@ -124,8 +124,8 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
         log.error(LOG_STACKTRACE_MSG, requestId, ex.getStackTrace());
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(BaseResponse.builder()
-                .responseCode(AVRStatus.ERROR.getCode())
-                .responseMessage(AVRStatus.ERROR.getStatus())
+                .responseCode(ServiceStatus.ERROR.getCode())
+                .responseMessage(ServiceStatus.ERROR.getStatus())
                 .requestId(requestId)
                 .requestTimestamp(new Date().getTime())
                 .build());
@@ -141,7 +141,7 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
         log.error("User-agent: {}", userAgent);
 
         if (WebUtil.isBrowser(userAgent) &&
-                AVRStatus.UNAUTHORIZED_REDIRECT.getCode().equalsIgnoreCase(ex.getResponseCode())) {
+                ServiceStatus.UNAUTHORIZED_REDIRECT.getCode().equalsIgnoreCase(ex.getResponseCode())) {
             response.sendRedirect("/login");
             return null;
         }

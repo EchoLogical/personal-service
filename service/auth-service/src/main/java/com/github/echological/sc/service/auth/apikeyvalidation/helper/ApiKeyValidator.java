@@ -1,6 +1,7 @@
 package com.github.echological.sc.service.auth.apikeyvalidation.helper;
 
 import com.github.echological.sc.datasource.auth.repository.ApiKeyRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ public class ApiKeyValidator {
 
     private final ApiKeyRepository apiKeyRepository;
 
+    @Autowired
     public ApiKeyValidator(ApiKeyRepository apiKeyRepository) {
         this.apiKeyRepository = apiKeyRepository;
     }

@@ -1,32 +1,21 @@
--- Flyway migration: create routes table for Spring Cloud Gateway and seed example routes
+-- Opsional: jika ingin default UUID otomatis
+-- membutuhkan ekstensi uuid-ossp
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-IF OBJECT_ID(N'dbo.gateway_routes', N'U') IS NULL
-BEGIN
-    CREATE TABLE dbo.gateway_routes (
-        id              nvarchar(200)  NOT NULL,
-        uri             nvarchar(1000) NOT NULL,
-        predicates_text nvarchar(max)  NULL,
-        filters_text    nvarchar(max)  NULL,
-        route_order     int            NULL,
-        metadata        nvarchar(max)  NULL,
-        enabled         bit            NOT NULL CONSTRAINT DF_gateway_routes_enabled DEFAULT (1),
-        created_at      datetime2      NOT NULL CONSTRAINT DF_gateway_routes_created_at DEFAULT (SYSDATETIME()),
-        CONSTRAINT PK_gateway_routes PRIMARY KEY CLUSTERED (id ASC)
+CREATE TABLE IF NOT EXISTS gateway_routes (
+    uuid           uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    service_id     varchar(1000) NOT NULL UNIQUE,
+    uri            varchar(1000) NOT NULL,
+    predicates_text text,
+    filters_text    text,
+    route_order     integer,
+    metadata        text,
+    enabled         boolean NOT NULL DEFAULT TRUE,
+    created_at      timestamp WITHOUT TIME ZONE NOT NULL DEFAULT now()
     );
-END
-GO
 
--- Seed example routes (idempotent)
-IF NOT EXISTS (SELECT 1 FROM dbo.gateway_routes WHERE id = 'eureka-server')
-BEGIN
-    INSERT INTO dbo.gateway_routes (id, uri, predicates_text, filters_text, route_order, metadata, enabled)
-    VALUES ('eureka-server', 'http://localhost:8761', '["Path=/eureka/**"]', '[]', 0, NULL, 1);
-END
-GO
+-- Index opsional untuk mempercepat pencarian route aktif
+CREATE INDEX IF NOT EXISTS idx_gateway_routes_enabled ON gateway_routes (enabled);
 
-IF NOT EXISTS (SELECT 1 FROM dbo.gateway_routes WHERE id = 'welcome-service')
-BEGIN
-    INSERT INTO dbo.gateway_routes (id, uri, predicates_text, filters_text, route_order, metadata, enabled)
-    VALUES ('welcome-service', 'lb://welcome-service', '["Path=/api/**"]', '[]', 0, NULL, 1);
-END
-GO
+-- Index opsional jika sering melakukan sort/filter berdasarkan route_order
+CREATE INDEX IF NOT EXISTS idx_gateway_routes_route_order ON gateway_routes (route_order);

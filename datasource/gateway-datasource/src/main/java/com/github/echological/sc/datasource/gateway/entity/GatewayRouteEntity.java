@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -20,11 +21,20 @@ import java.time.LocalDateTime;
 public class GatewayRouteEntity {
 
     @Id
-    @Column(name = "id", length = 200, nullable = false)
-    private String id;
+    @Column(name = "uuid", nullable = false)
+    private UUID uuid;
+
+    @Column(name = "service_id", length = 1000, nullable = false, unique = true)
+    private String serviceId;
 
     @Column(name = "uri", length = 1000, nullable = false)
     private String uri;
+
+    @Column(name = "from_path", nullable = false)
+    private String fromPath;
+
+    @Column(name = "to_path", nullable = false)
+    private String toPath;
 
     @Column(name = "predicates_text")
     private String predicatesText;
