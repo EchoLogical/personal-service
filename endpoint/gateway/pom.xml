@@ -44,7 +44,7 @@
 
         <dependency>
             <groupId>com.github.echological.sc.datasource.gateway</groupId>
-            <artifactId>gateway-repository</artifactId>
+            <artifactId>gateway-datasource</artifactId>
             <version>1.0</version>
         </dependency>
 

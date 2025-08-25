@@ -15,7 +15,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>gateway-repository</module>
+        <module>gateway-datasource</module>
+        <module>product-datasource</module>
+        <module>auth-datasource</module>
     </modules>
 
     <properties>

@@ -17,6 +17,7 @@
     <modules>
         <module>gateway-service</module>
         <module>product-service</module>
+        <module>auth-service</module>
     </modules>
 
     <properties>
