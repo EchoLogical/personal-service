@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: welcome-service
+server:
+  port: 8081
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.234.130:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.cloud.client.hostname:${HOSTNAME}}:${server.port}

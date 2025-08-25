@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.avrist.sc</groupId>
+        <groupId>com.github.echological.sc</groupId>
         <artifactId>sc</artifactId>
         <version>1.0</version>
     </parent>
 
-    <groupId>com.avrist.sc.endpoint</groupId>
+    <groupId>com.github.echological.sc.endpoint</groupId>
     <artifactId>endpoint</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
@@ -17,6 +17,7 @@
     <modules>
         <module>eureka</module>
         <module>gateway</module>
+        <module>welcome</module>
     </modules>
 
     <properties>

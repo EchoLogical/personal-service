@@ -10,7 +10,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.avrist.sc</groupId>
+    <groupId>com.github.echological.sc</groupId>
     <artifactId>sc</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
@@ -18,16 +18,18 @@
     <description>Service Collection</description>
 
     <modules>
+        <module>datasource</module>
         <module>global</module>
-        <module>endpoint</module>
         <module>service</module>
+        <module>endpoint</module>
     </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <org.projectlombok.version>1.18.20</org.projectlombok.version>
+        <org.projectlombok.version>1.18.36</org.projectlombok.version>
+        <spring-cloud.version>2025.0.0</spring-cloud.version>
     </properties>
 
     <dependencies>

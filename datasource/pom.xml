@@ -9,14 +9,13 @@
         <version>1.0</version>
     </parent>
 
-    <groupId>com.github.echological.sc.service</groupId>
-    <artifactId>service</artifactId>
+    <groupId>com.github.echological.sc.datasource</groupId>
+    <artifactId>datasource</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
 
     <modules>
-        <module>gateway-service</module>
-        <module>product-service</module>
+        <module>gateway-repository</module>
     </modules>
 
     <properties>
@@ -24,14 +23,5 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.github.echological.sc.global</groupId>
-            <artifactId>global</artifactId>
-            <version>1.0</version>
-        </dependency>
-    </dependencies>
-
 
 </project>

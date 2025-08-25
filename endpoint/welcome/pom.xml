@@ -9,8 +9,8 @@
         <version>1.0</version>
     </parent>
 
-    <groupId>com.github.echological.sc.endpoint.gateway</groupId>
-    <artifactId>gateway</artifactId>
+    <groupId>com.github.echological.sc.endpoint.welcome</groupId>
+    <artifactId>welcome</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
@@ -18,41 +18,17 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring-cloud.version>2025.0.0</spring-cloud.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-gateway</artifactId>
+            <groupId>com.github.echological.sc.global</groupId>
+            <artifactId>global</artifactId>
+            <version>1.0</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.echological.sc.datasource.gateway</groupId>
-            <artifactId>gateway-repository</artifactId>
-            <version>1.0</version>
-        </dependency>
-
-        <!-- Optional: Lombok (already in parent), annotation processor if needed -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
         </dependency>
     </dependencies>
 
@@ -67,5 +43,14 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

@@ -1,6 +1,6 @@
 package com.avrist.webui.global.util;
 
-import com.avrist.sc.global.global.global.util.AESEncryptionUtil;
+import com.github.echological.sc.global.util.AESEncryptionUtil;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

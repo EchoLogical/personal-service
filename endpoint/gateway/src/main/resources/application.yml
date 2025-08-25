@@ -4,23 +4,29 @@ server:
 spring:
   application:
     name: api-gateway
+  datasource:
+    url: ${DB_URL:jdbc:sqlserver://localhost:1433;databaseName=gateway;encrypt=false;trustServerCertificate=true}
+    username: ${DB_USERNAME:sa}
+    password: ${DB_PASSWORD:YourStrong!Passw0rd}
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    database-platform: org.hibernate.dialect.SQLServerDialect
+    open-in-view: false
+    show-sql: false
+    properties:
+      hibernate.jdbc.time_zone: UTC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
   cloud:
     gateway:
       discovery:
         locator:
           enabled: true
           lower-case-service-id: true
-      routes:
-        - id: app-service
-          uri: lb://log-report-app
-          predicates:
-            - Path=/api/app/**
-          filters:
-            - StripPrefix=2
-        - id: eureka-server
-          uri: http://localhost:8761
-          predicates:
-            - Path=/eureka/**
 
 eureka:
   client:
