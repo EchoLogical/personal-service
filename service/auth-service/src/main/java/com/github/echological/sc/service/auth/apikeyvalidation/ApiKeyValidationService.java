@@ -21,7 +21,7 @@ public class ApiKeyValidationService implements BusinessServiceContract<String, 
     }
 
     @Override
-    public Boolean execute(String apiKey) throws BusinessServiceValidationException {
+    public Boolean execute(String apiKey, String lang) throws BusinessServiceValidationException {
         if (apiKey == null || apiKey.isBlank()) {
             throw new BusinessServiceValidationException(
                     ServiceStatus.INVALID_ARGUMENT.getCode(),

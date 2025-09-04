@@ -1,15 +1,19 @@
 package com.github.echological.sc.service.auth.basicauthvalidation;
 
-import com.github.echological.sc.datasource.auth.entity.AuthUserEntity;
 import com.github.echological.sc.datasource.auth.repository.AuthUserRepository;
+import com.github.echological.sc.global.constant.ServiceStatus;
 import com.github.echological.sc.global.contract.BusinessServiceContract;
 import com.github.echological.sc.global.exception.BusinessServiceValidationException;
+import com.github.echological.sc.global.util.SysMessageUtil;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.ObjectUtils;
+import org.mindrot.jbcrypt.BCrypt;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
-import java.util.Optional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,79 +21,85 @@ public class BasicAuthValidationService implements BusinessServiceContract<Strin
 
     private final AuthUserRepository authUserRepository;
 
+    private String decodeBase64Token(String base64){
+        try {
+            byte[] bytes = Base64.getDecoder().decode(base64);
+            return new String(bytes, StandardCharsets.UTF_8);
+        }catch (Exception e){
+            return null;
+        }
+    }
 
     @Override
-    public Boolean execute(String input) throws BusinessServiceValidationException {
-        // Validasi header Authorization
-        if (input == null || input.isBlank()) {
-            throw new BusinessServiceValidationException("Authorization header tidak boleh kosong");
+    public Boolean execute(String input, String lang) throws BusinessServiceValidationException {
+        if(ObjectUtils.isEmpty(input)){
+            throw new BusinessServiceValidationException(
+                    ServiceStatus.UNAUTHORIZED.getCode(),
+                    ServiceStatus.UNAUTHORIZED.getStatus(),
+                    HttpStatus.UNAUTHORIZED,
+                    List.of(SysMessageUtil.getMessage(lang, "UNAUTHORIZED"))
+            );
         }
 
-        String prefix = "Basic ";
-        if (!input.regionMatches(true, 0, prefix, 0, prefix.length())) {
-            throw new BusinessServiceValidationException("Skema Authorization tidak valid. Harus menggunakan Basic");
+        var tokenParts = input.split(" ");
+
+        if(tokenParts.length != 2){
+            throw new BusinessServiceValidationException(
+                    ServiceStatus.UNAUTHORIZED.getCode(),
+                    ServiceStatus.UNAUTHORIZED.getStatus(),
+                    HttpStatus.UNAUTHORIZED,
+                    List.of(SysMessageUtil.getMessage(lang, "UNAUTHORIZED"))
+            );
         }
 
-        String base64Credentials = input.substring(prefix.length()).trim();
-        if (base64Credentials.isEmpty()) {
-            throw new BusinessServiceValidationException("Kredensial Basic tidak ditemukan");
+        if(!tokenParts[0].equalsIgnoreCase("basic")){
+            return false;
         }
 
-        String userPassDecoded;
-        try {
-            byte[] decodedBytes = Base64.getDecoder().decode(base64Credentials);
-            userPassDecoded = new String(decodedBytes, StandardCharsets.UTF_8);
-        } catch (IllegalArgumentException ex) {
-            throw new BusinessServiceValidationException("Format Base64 pada Authorization tidak valid");
+        var credentials = decodeBase64Token(tokenParts[1]);
+
+        if(ObjectUtils.isEmpty(credentials)){
+            throw new BusinessServiceValidationException(
+                    ServiceStatus.UNAUTHORIZED.getCode(),
+                    ServiceStatus.UNAUTHORIZED.getStatus(),
+                    HttpStatus.UNAUTHORIZED,
+                    List.of(SysMessageUtil.getMessage(lang, "UNAUTHORIZED"))
+            );
         }
 
-        int sep = userPassDecoded.indexOf(':');
-        if (sep < 0) {
-            throw new BusinessServiceValidationException("Format kredensial tidak valid. Gunakan username:password");
+        var credentialsParts = credentials.split(":");
+
+        if(credentialsParts.length != 2){
+            throw new BusinessServiceValidationException(
+                    ServiceStatus.UNAUTHORIZED.getCode(),
+                    ServiceStatus.UNAUTHORIZED.getStatus(),
+                    HttpStatus.UNAUTHORIZED,
+                    List.of(SysMessageUtil.getMessage(lang, "UNAUTHORIZED"))
+            );
         }
 
-        String username = userPassDecoded.substring(0, sep);
-        String password = userPassDecoded.substring(sep + 1);
+        var userData = authUserRepository.findByUsername(credentialsParts[0]);
 
-        if (username.isBlank() || password.isBlank()) {
-            throw new BusinessServiceValidationException("Username atau password tidak boleh kosong");
-        }
-
-        // Cari user
-        Optional<AuthUserEntity> optionalUser = authUserRepository.findByUsername(username);
-        AuthUserEntity user = optionalUser.orElseThrow(
-                () -> new BusinessServiceValidationException("User tidak ditemukan")
-        );
-
-        // Validasi status akun
-        if (!user.isEnabled()) {
-            throw new BusinessServiceValidationException("Akun dinonaktifkan");
-        }
-        if (!user.isAccountNonExpired()) {
-            throw new BusinessServiceValidationException("Akun telah kedaluwarsa");
-        }
-        if (!user.isAccountNonLocked()) {
-            throw new BusinessServiceValidationException("Akun terkunci");
-        }
-        if (!user.isCredentialsNonExpired()) {
-            throw new BusinessServiceValidationException("Kredensial telah kedaluwarsa");
+        if(userData.isEmpty()){
+            throw new BusinessServiceValidationException(
+                    ServiceStatus.UNAUTHORIZED.getCode(),
+                    ServiceStatus.UNAUTHORIZED.getStatus(),
+                    HttpStatus.UNAUTHORIZED,
+                    List.of(SysMessageUtil.getMessage(lang, "INVALID_USERNAME_OR_PASSWORD"))
+            );
         }
 
-        // Verifikasi password
-        if (!matchesPassword(password, user.getPassword())) {
-            throw new BusinessServiceValidationException("Password tidak sesuai");
+        if(!BCrypt.checkpw(credentialsParts[1], userData.get().getPassword())){
+            throw new BusinessServiceValidationException(
+                    ServiceStatus.UNAUTHORIZED.getCode(),
+                    ServiceStatus.UNAUTHORIZED.getStatus(),
+                    HttpStatus.UNAUTHORIZED,
+                    List.of(SysMessageUtil.getMessage(lang, "INVALID_USERNAME_OR_PASSWORD"))
+            );
         }
+
 
         return true;
     }
-
-    private boolean matchesPassword(String raw, String encoded) {
-        if (encoded == null || encoded.isBlank()) return false;
-        // Dukung format {bcrypt}<hash> atau langsung hash BCrypt ($2a/$2b/$2y)
-        String hash = encoded.startsWith("{bcrypt}") ? encoded.substring("{bcrypt}".length()) : encoded;
-        return new BCryptPasswordEncoder().matches(raw, hash);
-    }
-
-
 
 }

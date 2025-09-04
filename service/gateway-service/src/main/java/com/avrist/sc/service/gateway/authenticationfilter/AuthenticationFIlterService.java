@@ -5,10 +5,10 @@ import com.github.echological.sc.global.exception.BusinessServiceValidationExcep
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthenticationFIlterService implements BusinessServiceContract<Object, Object> {
+public class AuthenticationFilterService implements BusinessServiceContract<Object, Object> {
 
     @Override
-    public Object execute(Object input) throws BusinessServiceValidationException {
+    public Object execute(Object input, String lang) throws BusinessServiceValidationException {
         return null;
     }
 }

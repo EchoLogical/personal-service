@@ -4,6 +4,6 @@ import com.github.echological.sc.global.exception.BusinessServiceValidationExcep
 
 public interface BusinessServiceContract <I,O> {
 
-    O execute(I input) throws BusinessServiceValidationException;
+    O execute(I input, String lang) throws BusinessServiceValidationException;
 
 }

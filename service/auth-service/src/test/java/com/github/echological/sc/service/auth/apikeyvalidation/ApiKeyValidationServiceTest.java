@@ -27,6 +27,8 @@ class ApiKeyValidationServiceTest {
     @InjectMocks
     private ApiKeyValidationService service;
 
+    private static final String LANG_EN = "en";
+
     @Test
     void shouldThrowInvalidArgumentWhenApiKeyNull() {
         // given
@@ -35,7 +37,7 @@ class ApiKeyValidationServiceTest {
         // when
         BusinessServiceValidationException ex = assertThrows(
                 BusinessServiceValidationException.class,
-                () -> service.execute(apiKey)
+                () -> service.execute(apiKey, LANG_EN)
         );
 
         // then
@@ -54,7 +56,7 @@ class ApiKeyValidationServiceTest {
         // when
         BusinessServiceValidationException ex = assertThrows(
                 BusinessServiceValidationException.class,
-                () -> service.execute(apiKey)
+                () -> service.execute(apiKey, LANG_EN)
         );
 
         // then
@@ -74,7 +76,7 @@ class ApiKeyValidationServiceTest {
         // when
         BusinessServiceValidationException ex = assertThrows(
                 BusinessServiceValidationException.class,
-                () -> service.execute(apiKey)
+                () -> service.execute(apiKey, LANG_EN)
         );
 
         // then
@@ -93,7 +95,7 @@ class ApiKeyValidationServiceTest {
         given(apiKeyValidator.isValid(apiKey)).willReturn(true);
 
         // when
-        Boolean result = service.execute(apiKey);
+        Boolean result = service.execute(apiKey, LANG_EN);
 
         // then
         assertTrue(result);
